@@ -37,7 +37,7 @@ public class AndroidApplication extends Application{
     }
 
     private void initializeDependencies() {
-        repositoryComponent = DaggerSearchRepositoryComponent.builder()
+        repositoryComponent = DaggerWeatherRepositoryComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
     }
