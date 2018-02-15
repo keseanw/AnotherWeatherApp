@@ -42,7 +42,7 @@ public class AndroidApplication extends Application{
                 .build();
     }
 
-    public WeatherRepositoryComponent getSearchRepositoryComponent() {
+    public WeatherRepositoryComponent getWeatherRepositoryComponent() {
         return repositoryComponent;
     }
 }

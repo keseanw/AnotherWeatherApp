@@ -1,4 +1,4 @@
-package kesean.com.anotherweatherapp.ui;
+package kesean.com.anotherweatherapp.ui.weather;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
