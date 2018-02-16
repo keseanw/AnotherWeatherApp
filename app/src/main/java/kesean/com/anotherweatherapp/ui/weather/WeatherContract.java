@@ -1,5 +1,8 @@
 package kesean.com.anotherweatherapp.ui.weather;
 
+import java.util.List;
+
+import kesean.com.anotherweatherapp.data.model.Weather;
 import kesean.com.anotherweatherapp.ui.base.BasePresenter;
 
 /**
@@ -10,9 +13,22 @@ public class WeatherContract {
 
     interface View{
 
+        void showWeather(List<Weather> weather);
+
+        void clearWeather();
+
+        void showNoDataMessage();
+
+        void showErrorMessage(String error);
+
+        void stopLoadingIndicator();
+
+        void showEmptySearchResult();
     }
 
     interface WeatherPresenter extends BasePresenter<WeatherContract.View>{
+
+        void loadWeather(String cityName);
 
     }
 }
