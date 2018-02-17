@@ -14,18 +14,18 @@ import kesean.com.anotherweatherapp.data.repository.remote.WeatherRemoteDataSour
  */
 
 public class WeatherRepository implements WeatherDataSource {
-    private WeatherRemoteDataSource remoteWeatherDataSource;
+    private WeatherDataSource remoteDataSource;
     List<Weather> caches;
 
     @Inject
-    public WeatherRepository(@Remote WeatherRemoteDataSource remoteWeatherDataSource){
-        this.remoteWeatherDataSource = remoteWeatherDataSource;
+    public WeatherRepository(@Remote WeatherDataSource remoteDataSource){
+        this.remoteDataSource = remoteDataSource;
         caches = new ArrayList<>();
     }
 
     @Override
     public Flowable<List<Weather>> loadWeather(String cityName) {
-        return remoteWeatherDataSource.loadWeather(cityName)
+        return remoteDataSource.loadWeather(cityName)
                 .flatMap(Flowable::fromIterable)
                 .doOnNext(weather -> {
                     caches.add(weather);

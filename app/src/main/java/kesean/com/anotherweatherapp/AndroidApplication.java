@@ -5,6 +5,7 @@ import android.app.Application;
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 
+import kesean.com.anotherweatherapp.data.DaggerWeatherRepositoryComponent;
 import kesean.com.anotherweatherapp.data.WeatherRepositoryComponent;
 import timber.log.Timber;
 

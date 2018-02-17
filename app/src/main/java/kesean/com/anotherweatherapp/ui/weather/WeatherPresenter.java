@@ -7,6 +7,8 @@ import android.arch.lifecycle.OnLifecycleEvent;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -30,6 +32,7 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
 
     private CompositeDisposable disposeBag;
 
+    @Inject
     public WeatherPresenter(WeatherRepository repository, WeatherContract.View view,
                             @RunOn(SchedulerType.IO) Scheduler ioScheduler, @RunOn(SchedulerType.UI) Scheduler uiScheduler){
         this.repository = repository;
