@@ -9,9 +9,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import kesean.com.anotherweatherapp.R;
+import kesean.com.anotherweatherapp.data.Config;
 import kesean.com.anotherweatherapp.data.model.Weather;
 import kesean.com.anotherweatherapp.data.repository.WeatherRepository;
 import kesean.com.anotherweatherapp.util.RunOn;
@@ -66,6 +69,10 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
 
         // Load new one and populate it into view
         Disposable disposable = repository.loadWeather(cityName)
+                .flatMap(Flowable::fromIterable)
+                .filter(weather -> weather.getIcon() != null)
+                .toList()
+                .toFlowable()
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe(this::handleReturnedData, this::handleError, () -> view.stopLoadingIndicator());
@@ -84,5 +91,9 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
         } else {
             view.showNoDataMessage();
         }
+    }
+
+    public String getWeatherUrl(String weatherIcon) {
+        return Config.WEATHER_PHOTO_BASE_URL + weatherIcon + ".png";
     }
 }
