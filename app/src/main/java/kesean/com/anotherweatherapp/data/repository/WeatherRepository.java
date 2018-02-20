@@ -1,5 +1,8 @@
 package kesean.com.anotherweatherapp.data.repository;
 
+import android.app.Application;
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +18,15 @@ import kesean.com.anotherweatherapp.data.repository.remote.WeatherRemoteDataSour
 
 public class WeatherRepository implements WeatherDataSource {
     private WeatherDataSource remoteDataSource;
+    private WeatherDataSource localDataSource;
+
     List<Weather> caches;
 
     @Inject
-    public WeatherRepository(@Remote WeatherDataSource remoteDataSource){
+    public WeatherRepository(@Local WeatherDataSource localDataSource,
+            @Remote WeatherDataSource remoteDataSource){
         this.remoteDataSource = remoteDataSource;
+        this.localDataSource = localDataSource;
         caches = new ArrayList<>();
     }
 
@@ -32,5 +39,15 @@ public class WeatherRepository implements WeatherDataSource {
                     //revisit
                     //localDataSource.addSearch(search);
                 }).toList().toFlowable();
+    }
+
+    @Override
+    public void setWeatherCityName(String cityName, Context context) {
+        localDataSource.setWeatherCityName(cityName, context);
+    }
+
+    @Override
+    public String getWeatherCityName(Context context) {
+        return localDataSource.getWeatherCityName(context);
     }
 }

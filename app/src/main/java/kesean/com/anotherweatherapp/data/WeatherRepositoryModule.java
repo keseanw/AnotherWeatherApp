@@ -4,8 +4,10 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import kesean.com.anotherweatherapp.data.repository.Local;
 import kesean.com.anotherweatherapp.data.repository.Remote;
 import kesean.com.anotherweatherapp.data.repository.WeatherDataSource;
+import kesean.com.anotherweatherapp.data.repository.local.WeatherLocalDataSource;
 import kesean.com.anotherweatherapp.data.repository.remote.WeatherRemoteDataSource;
 
 /**
@@ -14,6 +16,14 @@ import kesean.com.anotherweatherapp.data.repository.remote.WeatherRemoteDataSour
 
 @Module
 public class WeatherRepositoryModule {
+
+    @Provides
+    @Local
+    @Singleton
+    public WeatherDataSource provideLocalDataSource(WeatherLocalDataSource weatherLocalDataSource) {
+        return weatherLocalDataSource;
+    }
+
 
     /*
     * Remote data source for API calls

@@ -1,9 +1,11 @@
 package kesean.com.anotherweatherapp.ui.weather;
 
+import android.app.Application;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.content.Context;
 
 import java.util.List;
 
@@ -55,6 +57,7 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
     @Override @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void onAttach() {
         //based on shared prefs- check if city name is saved.. if not display error page/empty results
+        //loadWeather(getWeatherCityName());
     }
 
     @Override @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
@@ -77,6 +80,16 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
                 .observeOn(uiScheduler)
                 .subscribe(this::handleReturnedData, this::handleError, () -> view.stopLoadingIndicator());
         disposeBag.add(disposable);
+    }
+
+    @Override
+    public void setWeatherCityName(String cityName, Context context) {
+        repository.setWeatherCityName(cityName, context);
+    }
+
+    @Override
+    public String getWeatherCityName(Context context) {
+        return repository.getWeatherCityName(context);
     }
 
     private void handleError(Throwable error) {

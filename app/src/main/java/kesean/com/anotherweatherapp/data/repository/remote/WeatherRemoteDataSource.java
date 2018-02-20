@@ -1,5 +1,8 @@
 package kesean.com.anotherweatherapp.data.repository.remote;
 
+import android.app.Application;
+import android.content.Context;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,5 +28,21 @@ public class WeatherRemoteDataSource implements WeatherDataSource {
     @Override
     public Flowable<List<Weather>> loadWeather(String cityName) {
         return weatherService.getWeather(cityName).map(WeatherResponse::getWeather);
+    }
+
+    /*
+    * Not in Use
+    * */
+    @Override
+    public void setWeatherCityName(String cityName, Context context) {
+
+    }
+
+    /*
+    * Not in Use
+    * */
+    @Override
+    public String getWeatherCityName(Context context) {
+        return null;
     }
 }

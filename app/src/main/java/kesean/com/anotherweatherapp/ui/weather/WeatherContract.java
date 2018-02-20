@@ -1,5 +1,8 @@
 package kesean.com.anotherweatherapp.ui.weather;
 
+import android.app.Application;
+import android.content.Context;
+
 import java.util.List;
 
 import kesean.com.anotherweatherapp.data.model.Weather;
@@ -29,6 +32,10 @@ public class WeatherContract {
     interface WeatherPresenter extends BasePresenter<WeatherContract.View>{
 
         void loadWeather(String cityName);
+
+        void setWeatherCityName(String cityName, Context context);
+
+        String getWeatherCityName(Context context);
 
     }
 }

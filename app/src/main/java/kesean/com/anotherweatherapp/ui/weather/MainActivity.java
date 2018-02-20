@@ -39,9 +39,8 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initializePresenter();
-        refreshLayout.setOnRefreshListener(() -> presenter.loadWeather("Orlando"));
+        refreshLayout.setOnRefreshListener(() -> presenter.loadWeather(presenter.getWeatherCityName(this)));
 
-        //check for shared prefs - load previous city
     }
 
     private void initializePresenter() {
