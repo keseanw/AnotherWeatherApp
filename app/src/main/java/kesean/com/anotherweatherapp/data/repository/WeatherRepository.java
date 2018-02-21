@@ -1,7 +1,7 @@
 package kesean.com.anotherweatherapp.data.repository;
 
-import android.app.Application;
-import android.content.Context;
+
+import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +9,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import kesean.com.anotherweatherapp.data.Config;
 import kesean.com.anotherweatherapp.data.model.Weather;
-import kesean.com.anotherweatherapp.data.repository.remote.WeatherRemoteDataSource;
+
 
 /**
  * Created by Kesean on 2/13/18.
@@ -18,15 +19,14 @@ import kesean.com.anotherweatherapp.data.repository.remote.WeatherRemoteDataSour
 
 public class WeatherRepository implements WeatherDataSource {
     private WeatherDataSource remoteDataSource;
-    private WeatherDataSource localDataSource;
+    private SharedPreferences preferences;
 
     List<Weather> caches;
 
     @Inject
-    public WeatherRepository(@Local WeatherDataSource localDataSource,
-            @Remote WeatherDataSource remoteDataSource){
+    public WeatherRepository(SharedPreferences preferences, @Remote WeatherDataSource remoteDataSource){
+        this.preferences = preferences;
         this.remoteDataSource = remoteDataSource;
-        this.localDataSource = localDataSource;
         caches = new ArrayList<>();
     }
 
@@ -42,12 +42,14 @@ public class WeatherRepository implements WeatherDataSource {
     }
 
     @Override
-    public void setWeatherCityName(String cityName, Context context) {
-        localDataSource.setWeatherCityName(cityName, context);
+    public void setWeatherCityName(String cityName) {
+        preferences.edit()
+                .putString(Config.WEATHER_CITY_NAME, cityName)
+                .apply();
     }
 
     @Override
-    public String getWeatherCityName(Context context) {
-        return localDataSource.getWeatherCityName(context);
+    public String getWeatherCityName() {
+        return preferences.getString(Config.WEATHER_CITY_NAME, "none");
     }
 }

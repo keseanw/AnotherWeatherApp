@@ -16,7 +16,7 @@ public interface WeatherDataSource {
 
     Flowable<List<Weather>> loadWeather(String cityName);
 
-    void setWeatherCityName(String cityName, Context context);
+    void setWeatherCityName(String cityName);
 
-    String getWeatherCityName(Context context);
+    String getWeatherCityName();
 }

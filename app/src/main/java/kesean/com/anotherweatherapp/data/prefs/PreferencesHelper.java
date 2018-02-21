@@ -9,7 +9,7 @@ import android.content.Context;
 
 public interface PreferencesHelper {
 
-    void setWeatherCityName(String cityName, Context context);
+    void setWeatherCityName(String cityName);
 
-    String getWeatherCityName(Context context);
+    String getWeatherCityName();
 }

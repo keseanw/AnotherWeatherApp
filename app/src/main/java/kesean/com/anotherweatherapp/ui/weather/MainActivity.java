@@ -1,5 +1,6 @@
 package kesean.com.anotherweatherapp.ui.weather;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
@@ -39,7 +40,7 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initializePresenter();
-        refreshLayout.setOnRefreshListener(() -> presenter.loadWeather(presenter.getWeatherCityName(this)));
+        refreshLayout.setOnRefreshListener(() -> presenter.loadWeather(presenter.getWeatherCityName()));
 
     }
 
@@ -61,8 +62,13 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String query) {
-                presenter.loadWeather(query);
-                return true;
+//                if(query != null || !query.isEmpty()) {
+                    presenter.loadWeather(query);
+                    return true;
+//                }else
+//                {
+//                    return false;
+//                }
             }
 
             @Override public boolean onQueryTextChange(String newText) {

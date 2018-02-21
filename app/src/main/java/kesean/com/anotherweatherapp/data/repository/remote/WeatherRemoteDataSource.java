@@ -34,7 +34,7 @@ public class WeatherRemoteDataSource implements WeatherDataSource {
     * Not in Use
     * */
     @Override
-    public void setWeatherCityName(String cityName, Context context) {
+    public void setWeatherCityName(String cityName) {
 
     }
 
@@ -42,7 +42,7 @@ public class WeatherRemoteDataSource implements WeatherDataSource {
     * Not in Use
     * */
     @Override
-    public String getWeatherCityName(Context context) {
+    public String getWeatherCityName() {
         return null;
     }
 }

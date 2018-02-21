@@ -33,9 +33,9 @@ public class WeatherContract {
 
         void loadWeather(String cityName);
 
-        void setWeatherCityName(String cityName, Context context);
+        void setWeatherCityName(String cityName);
 
-        String getWeatherCityName(Context context);
+        String getWeatherCityName();
 
     }
 }

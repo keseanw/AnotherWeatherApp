@@ -1,5 +1,6 @@
 package kesean.com.anotherweatherapp.data.prefs;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -13,20 +14,20 @@ import javax.inject.Inject;
 public class AppPreferencesHelper implements PreferencesHelper {
 
     private static final String WEATHER_CITY_NAME = "WEATHER_CITY_NAME";
-    private final SharedPreferences mPrefs;
+    //private final SharedPreferences mPrefs;
 
     //@Inject
-    public AppPreferencesHelper(Context context) {
-        mPrefs =  PreferenceManager.getDefaultSharedPreferences(context);
+//    public AppPreferencesHelper(Context context) {
+//        mPrefs =  PreferenceManager.getDefaultSharedPreferences(context);
+//    }
+
+    @Override
+    public void setWeatherCityName(String cityName) {
+
     }
 
     @Override
-    public void setWeatherCityName(String cityName, Context context) {
-
-    }
-
-    @Override
-    public String getWeatherCityName(Context context) {
+    public String getWeatherCityName() {
         return null;
     }
 }
