@@ -27,6 +27,8 @@ public class WeatherContract {
         void stopLoadingIndicator();
 
         void showEmptySearchResult();
+
+        void clearView();
     }
 
     interface WeatherPresenter extends BasePresenter<WeatherContract.View>{

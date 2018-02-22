@@ -59,6 +59,7 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
     public void onAttach() {
         //based on shared prefs- check if city name is saved.. if not display error page/empty results
         if(!getWeatherCityName().equals("none")){
+
             loadWeather(getWeatherCityName());
         }else{
             view.showNoDataMessage();
@@ -74,7 +75,7 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
     public void loadWeather(String cityName) {
 //        // Clear old data on view
 //        view.clearWeather();
-//
+        view.clearView();
         //Add previous query to share preferences
         if(!cityName.isEmpty()) {
             setWeatherCityName(cityName);
@@ -117,6 +118,6 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
     }
 
     public String getWeatherUrl(String weatherIcon) {
-        return Config.WEATHER_PHOTO_BASE_URL + weatherIcon + ".png";
+        return Config.AWS_WEATHER_PHOTO_BASE_URL + weatherIcon + ".png";
     }
 }

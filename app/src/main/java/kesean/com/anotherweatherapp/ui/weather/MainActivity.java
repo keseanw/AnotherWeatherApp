@@ -111,6 +111,11 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
         showNotification(getString(R.string.msg_empty_search_result));
     }
 
+    @Override
+    public void clearView() {
+        notificationText.setVisibility(View.GONE);
+    }
+
     /*
     * Method for displaying error message in view
     * */
