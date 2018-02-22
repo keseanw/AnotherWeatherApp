@@ -1,12 +1,17 @@
 package kesean.com.anotherweatherapp.ui.weather;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +40,8 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
     @BindView(R.id.weather_forecast)
     TextView forecast;
 
+    private Menu refreshMenu;
+
     @Inject
     WeatherPresenter presenter;
 
@@ -58,7 +65,10 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //TODO rename menu file name - confusing
         getMenuInflater().inflate(R.menu.search, menu);
+
+        refreshMenu = menu;
 
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setQueryHint(getString(R.string.search_hint));
@@ -81,6 +91,25 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
         });
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_refresh:
+                // Do animation start
+                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                ImageView iv = (ImageView)inflater.inflate(R.layout.iv_refresh, null);
+                Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_refresh);
+                rotation.setRepeatCount(Animation.INFINITE);
+                iv.startAnimation(rotation);
+                item.setActionView(iv);
+
+                //getting weather data
+                presenter.loadWeather(presenter.getWeatherCityName());
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -108,9 +137,15 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
 
     @Override
     public void stopLoadingIndicator() {
-//        if (refreshLayout.isRefreshing()) {
-//            refreshLayout.setRefreshing(false);
-//        }
+        if(refreshMenu != null) {
+            // Get our refresh item from the menu
+            MenuItem m = refreshMenu.findItem(R.id.action_refresh);
+            if (m.getActionView() != null) {
+                // Remove the animation.
+                m.getActionView().clearAnimation();
+                m.setActionView(null);
+            }
+        }
     }
 
     @Override
