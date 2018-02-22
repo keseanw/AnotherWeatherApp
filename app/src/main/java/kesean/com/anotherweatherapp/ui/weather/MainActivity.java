@@ -24,12 +24,16 @@ import kesean.com.anotherweatherapp.data.model.Weather;
 import kesean.com.anotherweatherapp.ui.base.BaseActivity;
 
 public class MainActivity extends BaseActivity implements WeatherContract.View {
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refreshLayout;
+//    @BindView(R.id.refresh)
+//    SwipeRefreshLayout refreshLayout;
     @BindView(R.id.text_notification)
     TextView notificationText;
     @BindView(R.id.weather_image)
     ImageView imageView;
+    @BindView(R.id.weather_location)
+    TextView location;
+    @BindView(R.id.weather_forecast)
+    TextView forecast;
 
     @Inject
     WeatherPresenter presenter;
@@ -40,7 +44,7 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initializePresenter();
-        refreshLayout.setOnRefreshListener(() -> presenter.loadWeather(presenter.getWeatherCityName()));
+        //refreshLayout.setOnRefreshListener(() -> presenter.loadWeather(presenter.getWeatherCityName()));
 
     }
 
@@ -82,6 +86,9 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
     @Override
     public void showWeather(List<Weather> weather) {
         Glide.with(imageView).load(presenter.getWeatherUrl(weather.get(0).getIcon())).into(imageView);
+        forecast.setText(weather.get(0).getDescription());
+        //check if null
+        location.setText(presenter.getWeatherCityName());
     }
 
     @Override
@@ -101,9 +108,9 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
 
     @Override
     public void stopLoadingIndicator() {
-        if (refreshLayout.isRefreshing()) {
-            refreshLayout.setRefreshing(false);
-        }
+//        if (refreshLayout.isRefreshing()) {
+//            refreshLayout.setRefreshing(false);
+//        }
     }
 
     @Override

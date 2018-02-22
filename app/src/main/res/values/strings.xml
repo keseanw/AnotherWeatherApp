@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AnotherWeatherApp</string>
     <string name="search">Search</string>
+    <string name="refresh">Refresh</string>
     <string name="search_hint">Search Weather by City Name</string>
     <string name="msg_empty_search_result">No Weather Results</string>
     <string name="msg_no_data">No Data Found</string>
