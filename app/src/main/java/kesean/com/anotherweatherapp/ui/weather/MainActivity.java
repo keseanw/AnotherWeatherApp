@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -41,6 +42,7 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
     TextView forecast;
 
     private Menu refreshMenu;
+    List<Weather> weatherList;
 
     @Inject
     WeatherPresenter presenter;
@@ -51,6 +53,7 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initializePresenter();
+        weatherList = new ArrayList<>();
         //refreshLayout.setOnRefreshListener(() -> presenter.loadWeather(presenter.getWeatherCityName()));
 
     }
@@ -114,15 +117,21 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
 
     @Override
     public void showWeather(List<Weather> weather) {
-        Glide.with(imageView).load(presenter.getWeatherUrl(weather.get(0).getIcon())).into(imageView);
-        forecast.setText(weather.get(0).getDescription());
+        weatherList = weather;
+        Glide.with(imageView)
+                .load(presenter.getWeatherUrl(weatherList.get(0).getIcon()))
+                .into(imageView);
+        forecast.setText(weatherList.get(0).getDescription());
         //check if null
         location.setText(presenter.getWeatherCityName());
     }
 
     @Override
     public void clearWeather() {
-
+        if(!weatherList.isEmpty()){
+            weatherList.clear();
+            Glide.with(imageView).clear(imageView);
+        }
     }
 
     @Override

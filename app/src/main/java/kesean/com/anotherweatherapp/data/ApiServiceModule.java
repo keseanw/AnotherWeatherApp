@@ -1,10 +1,14 @@
 package kesean.com.anotherweatherapp.data;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import kesean.com.anotherweatherapp.data.api.NetworkConnectivityInterceptor;
 import kesean.com.anotherweatherapp.data.api.QueryInterceptor;
 import kesean.com.anotherweatherapp.data.api.WeatherService;
 import okhttp3.OkHttpClient;
@@ -36,6 +40,18 @@ public class ApiServiceModule {
 
     @Provides
     @Singleton
+    ConnectivityManager provideConnectivityManager(Context context) {
+        return (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+
+    @Provides
+    @Singleton
+    NetworkConnectivityInterceptor provideNetworkConnectivityInterceptor(ConnectivityManager connectivityManager) {
+        return new NetworkConnectivityInterceptor(connectivityManager);
+    }
+
+    @Provides
+    @Singleton
     QueryInterceptor provideQueryInterceptor() {
         return new QueryInterceptor();
     }
@@ -49,8 +65,9 @@ public class ApiServiceModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideHttpClient(QueryInterceptor queryInterceptor, HttpLoggingInterceptor httpInterceptor) {
+    OkHttpClient provideHttpClient(NetworkConnectivityInterceptor networkConnectivityInterceptor, QueryInterceptor queryInterceptor, HttpLoggingInterceptor httpInterceptor) {
         return new OkHttpClient.Builder()
+                .addInterceptor(networkConnectivityInterceptor)
                 .addInterceptor(queryInterceptor)
                 .addInterceptor(httpInterceptor)
                 .build();

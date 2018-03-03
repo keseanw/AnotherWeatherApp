@@ -73,8 +73,8 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
 
     @Override
     public void loadWeather(String cityName) {
-//        // Clear old data on view
-//        view.clearWeather();
+       // Clear old data on view
+        view.clearWeather();
         view.clearView();
         //Add previous query to share preferences
         if(!cityName.isEmpty()) {
@@ -105,6 +105,7 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
 
     private void handleError(Throwable error) {
         view.stopLoadingIndicator();
+        //can handle displaying different views based on errors returned
         view.showErrorMessage(error.getLocalizedMessage());
     }
 
