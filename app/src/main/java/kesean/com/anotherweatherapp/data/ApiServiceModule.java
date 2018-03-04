@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import kesean.com.anotherweatherapp.data.api.HttpErrorInterceptor;
 import kesean.com.anotherweatherapp.data.api.NetworkConnectivityInterceptor;
 import kesean.com.anotherweatherapp.data.api.QueryInterceptor;
 import kesean.com.anotherweatherapp.data.api.WeatherService;
@@ -52,6 +53,10 @@ public class ApiServiceModule {
 
     @Provides
     @Singleton
+    HttpErrorInterceptor provideHttpErrorInterceptor() {return new HttpErrorInterceptor();}
+
+    @Provides
+    @Singleton
     QueryInterceptor provideQueryInterceptor() {
         return new QueryInterceptor();
     }
@@ -65,8 +70,9 @@ public class ApiServiceModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideHttpClient(NetworkConnectivityInterceptor networkConnectivityInterceptor, QueryInterceptor queryInterceptor, HttpLoggingInterceptor httpInterceptor) {
+    OkHttpClient provideHttpClient(HttpErrorInterceptor httpErrorInterceptor, NetworkConnectivityInterceptor networkConnectivityInterceptor, QueryInterceptor queryInterceptor, HttpLoggingInterceptor httpInterceptor) {
         return new OkHttpClient.Builder()
+                .addInterceptor(httpErrorInterceptor)
                 .addInterceptor(networkConnectivityInterceptor)
                 .addInterceptor(queryInterceptor)
                 .addInterceptor(httpInterceptor)
