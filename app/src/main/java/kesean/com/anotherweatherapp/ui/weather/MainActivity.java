@@ -27,6 +27,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kesean.com.anotherweatherapp.R;
+import kesean.com.anotherweatherapp.data.model.Main;
 import kesean.com.anotherweatherapp.data.model.Weather;
 import kesean.com.anotherweatherapp.ui.base.BaseActivity;
 
@@ -41,6 +42,8 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
     TextView location;
     @BindView(R.id.weather_forecast)
     TextView forecast;
+    @BindView(R.id.weather_temp)
+    TextView weatherTemp;
 
     private Menu refreshMenu;
     List<Weather> weatherList;
@@ -118,12 +121,14 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
     }
 
     @Override
-    public void showWeather(List<Weather> weather) {
+    public void showWeather(List<Weather> weather, Main temp) {
         weatherList = weather;
         Glide.with(imageView)
                 .load(presenter.getWeatherUrl(weatherList.get(0).getIcon()))
                 .into(imageView);
         forecast.setText(weatherList.get(0).getDescription());
+        String d = String.valueOf(temp.getTemp());
+        weatherTemp.setText(d);
         //check if null
         location.setText(presenter.getWeatherCityName());
     }

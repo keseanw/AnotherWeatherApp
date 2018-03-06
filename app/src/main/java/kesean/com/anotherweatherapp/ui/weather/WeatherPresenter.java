@@ -18,7 +18,9 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import kesean.com.anotherweatherapp.R;
 import kesean.com.anotherweatherapp.data.Config;
+import kesean.com.anotherweatherapp.data.model.CityWeather;
 import kesean.com.anotherweatherapp.data.model.Weather;
+import kesean.com.anotherweatherapp.data.model.WeatherResponseData;
 import kesean.com.anotherweatherapp.data.repository.WeatherRepository;
 import kesean.com.anotherweatherapp.util.RunOn;
 import kesean.com.anotherweatherapp.util.SchedulerType;
@@ -83,10 +85,7 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
 
         // Load new one and populate it into view
         Disposable disposable = repository.loadWeather(cityName)
-                .flatMap(Flowable::fromIterable)
-                .filter(weather -> weather.getIcon() != null)
-                .toList()
-                .toFlowable()
+                .filter(weather -> weather.getWeather().get(0).getIcon() != null)
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe(this::handleReturnedData, this::handleError, () -> view.stopLoadingIndicator());
@@ -109,10 +108,11 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
         view.showErrorMessage(error.getLocalizedMessage());
     }
 
-    private void handleReturnedData(List<Weather> list) {
+    private void handleReturnedData(CityWeather obj) {
         view.stopLoadingIndicator();
-        if (list != null && !list.isEmpty()) {
-            view.showWeather(list);
+
+        if (obj.getWeather() != null && !obj.getWeather().isEmpty()) {
+            view.showWeather(obj.getWeather(), obj.getMain());
         } else {
             view.showNoDataMessage();
         }

@@ -1,7 +1,11 @@
 package kesean.com.anotherweatherapp.data.api;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
 import kesean.com.anotherweatherapp.data.model.CityWeather;
+import kesean.com.anotherweatherapp.data.model.Weather;
+import kesean.com.anotherweatherapp.data.model.WeatherResponseData;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -13,5 +17,5 @@ import retrofit2.http.Query;
 public interface WeatherService {
 
     @GET("data/2.5/weather")
-    Flowable<WeatherResponse> getWeather(@Query("q") String location);
+    Flowable<CityWeather> getWeatherResponse(@Query("q") String location);
 }

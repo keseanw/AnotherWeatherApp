@@ -10,7 +10,9 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import kesean.com.anotherweatherapp.data.api.WeatherResponse;
 import kesean.com.anotherweatherapp.data.api.WeatherService;
+import kesean.com.anotherweatherapp.data.model.CityWeather;
 import kesean.com.anotherweatherapp.data.model.Weather;
+import kesean.com.anotherweatherapp.data.model.WeatherResponseData;
 import kesean.com.anotherweatherapp.data.repository.WeatherDataSource;
 
 /**
@@ -26,8 +28,8 @@ public class WeatherRemoteDataSource implements WeatherDataSource {
     }
 
     @Override
-    public Flowable<List<Weather>> loadWeather(String cityName) {
-        return weatherService.getWeather(cityName).map(WeatherResponse::getWeather);
+    public Flowable<CityWeather> loadWeather(String cityName) {
+        return weatherService.getWeatherResponse(cityName);
     }
 
     /*

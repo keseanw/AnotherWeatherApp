@@ -16,8 +16,16 @@ public class WeatherResponse {
     @SerializedName("weather")
     private List<Weather> weather;
 
-//    @SerializedName("Main")
-//    private Main main;
+    @SerializedName("main")
+    private Main main;
+
+    public Main getMain() {
+        return main;
+    }
+
+    public void setMain(Main main) {
+        this.main = main;
+    }
 
     public List<Weather> getWeather() {
         return weather;

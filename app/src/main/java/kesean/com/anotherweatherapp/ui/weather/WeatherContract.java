@@ -5,6 +5,7 @@ import android.content.Context;
 
 import java.util.List;
 
+import kesean.com.anotherweatherapp.data.model.Main;
 import kesean.com.anotherweatherapp.data.model.Weather;
 import kesean.com.anotherweatherapp.ui.base.BasePresenter;
 
@@ -16,7 +17,7 @@ public class WeatherContract {
 
     interface View{
 
-        void showWeather(List<Weather> weather);
+        void showWeather(List<Weather> weather, Main temp);
 
         void clearWeather();
 

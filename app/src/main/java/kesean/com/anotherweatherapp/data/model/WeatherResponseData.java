@@ -4,32 +4,20 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import kesean.com.anotherweatherapp.data.api.WeatherResponse;
+
 /**
  * Created by Kesean on 2/22/18.
  */
 
 public class WeatherResponseData {
-    @SerializedName("weather")
-    private List<Weather> weather;
+    private WeatherResponse weatherResponse;
 
-    @SerializedName("main")
-    private Main main;
-
-    public List<Weather> getWeatherList() {
-        return weather;
+    public WeatherResponse getWeatherResponse() {
+        return weatherResponse;
     }
 
-    public void setWeatherList(List<Weather> weather) {
-        this.weather = weather;
+    public void setWeatherResponse(WeatherResponse weatherResponse) {
+        this.weatherResponse = weatherResponse;
     }
-
-    public Main getMain() {
-        return main;
-    }
-
-    public void setMain(Main main) {
-        this.main = main;
-    }
-
-
 }
