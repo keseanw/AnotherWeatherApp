@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,13 +80,14 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String query) {
-//                if(query != null || !query.isEmpty()) {
+                View view = searchView.getFocusedChild();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
                     presenter.loadWeather(query);
                     return true;
-//                }else
-//                {
-//                    return false;
-//                }
+
             }
 
             @Override public boolean onQueryTextChange(String newText) {
