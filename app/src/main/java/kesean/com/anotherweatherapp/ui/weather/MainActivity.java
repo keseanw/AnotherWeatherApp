@@ -128,7 +128,7 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
                 .into(imageView);
         forecast.setText(weatherList.get(0).getDescription());
         String d = String.valueOf(temp.getTemp());
-        weatherTemp.setText(d);
+        weatherTemp.setText(presenter.getFahrenheit(temp.getTemp()) + '\u00B0');
         //check if null
         location.setText(presenter.getWeatherCityName());
     }

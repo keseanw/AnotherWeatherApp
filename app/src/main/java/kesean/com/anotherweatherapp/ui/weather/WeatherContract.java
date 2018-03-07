@@ -30,6 +30,7 @@ public class WeatherContract {
         void showEmptySearchResult();
 
         void clearView();
+
     }
 
     interface WeatherPresenter extends BasePresenter<WeatherContract.View>{
@@ -39,6 +40,10 @@ public class WeatherContract {
         void setWeatherCityName(String cityName);
 
         String getWeatherCityName();
+
+        String getFahrenheit(double kelvin);
+
+        String getCelcius(double kelvin);
 
     }
 }

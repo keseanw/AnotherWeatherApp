@@ -102,6 +102,17 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
         return repository.getWeatherCityName();
     }
 
+    @Override
+    public String getFahrenheit(double kelvin) {
+        int calculation = (int) ((kelvin * (9/5f)) - 459.67);
+        return String.valueOf(calculation);
+    }
+
+    @Override
+    public String getCelcius(double kelvin) {
+        return null;
+    }
+
     private void handleError(Throwable error) {
         view.stopLoadingIndicator();
         //can handle displaying different views based on errors returned
