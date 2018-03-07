@@ -110,7 +110,16 @@ public class WeatherPresenter implements WeatherContract.WeatherPresenter, Lifec
 
     @Override
     public String getCelcius(double kelvin) {
-        return null;
+        int calculation = (int) (kelvin  - 273.15);
+        return String.valueOf(calculation);
+    }
+
+    @Override
+    public String changeTempValue(double kelvin, boolean isChecked) {
+        if(!isChecked){
+            return getCelcius(kelvin);
+        }
+            return getFahrenheit(kelvin);
     }
 
     private void handleError(Throwable error) {

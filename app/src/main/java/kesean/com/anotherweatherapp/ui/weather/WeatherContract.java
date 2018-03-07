@@ -45,5 +45,7 @@ public class WeatherContract {
 
         String getCelcius(double kelvin);
 
+        String changeTempValue(double kelvin, boolean isChecked);
+
     }
 }

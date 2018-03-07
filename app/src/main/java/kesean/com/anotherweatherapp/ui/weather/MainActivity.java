@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +45,8 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
     TextView forecast;
     @BindView(R.id.weather_temp)
     TextView weatherTemp;
+    @BindView(R.id.tempSwitch)
+    SwitchCompat tempSwitch;
 
     private Menu refreshMenu;
     List<Weather> weatherList;
@@ -58,6 +61,7 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
         ButterKnife.bind(this);
         initializePresenter();
         weatherList = new ArrayList<>();
+        tempSwitch.setOnClickListener((view)-> presenter.loadWeather(presenter.getWeatherCityName()));
         //refreshLayout.setOnRefreshListener(() -> presenter.loadWeather(presenter.getWeatherCityName()));
 
     }
@@ -128,7 +132,8 @@ public class MainActivity extends BaseActivity implements WeatherContract.View {
                 .into(imageView);
         forecast.setText(weatherList.get(0).getDescription());
         String d = String.valueOf(temp.getTemp());
-        weatherTemp.setText(presenter.getFahrenheit(temp.getTemp()) + '\u00B0');
+        //weatherTemp.setText(presenter.getFahrenheit(temp.getTemp()) + '\u00B0');
+        weatherTemp.setText(presenter.changeTempValue(temp.getTemp(), tempSwitch.isChecked()) + '\u00B0');
         //check if null
         location.setText(presenter.getWeatherCityName());
     }
